@@ -1,0 +1,118 @@
+group = 'pl.allegro.tech.elasticsearch.plugin'
+version = versions.elasticsearch
+
+buildscript {
+    ext {
+        pluginName = 'analysis-morfologik'
+        pluginClassname = 'pl.allegro.tech.elasticsearch.plugin.analysis.morfologik.AnalysisMorfologikPlugin'
+        pluginDescription = 'Morfologik Polish Lemmatizer plugin for Elasticsearch'
+        versions = [
+                'elasticsearch'         : '2.4.1',
+                'lucene'                : '5.5.0',
+                'log4j'                 : '2.6.2',
+                'junit'                 : '4.12',
+                'embedded_elasticsearch': '2.1.0',
+                'spock'                 : '1.0-groovy-2.4'
+        ]
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+configurations {
+    providedCompile
+    wagon
+    releaseJars {
+        extendsFrom runtime
+        exclude group: 'org.elasticsearch'
+        exclude group: 'com.fasterxml.jackson.core', module: 'jackson-core'
+        exclude group: 'org.slf4j'
+        exclude group: 'log4j'
+        exclude module: 'lucene-core'
+        exclude module: 'lucene-analyzers-common'
+    }
+}
+
+dependencies {
+    compile group: 'org.elasticsearch', name: 'elasticsearch', version: versions.elasticsearch
+    compile group: 'org.apache.lucene', name: 'lucene-analyzers-morfologik', version: versions.lucene
+    testCompile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: versions.log4j
+    testCompile group: 'org.apache.logging.log4j', name: 'log4j-core', version: versions.log4j
+    testCompile group: 'org.spockframework', name: 'spock-core', version: versions.spock
+    testCompile group: 'pl.allegro.tech', name: 'embedded-elasticsearch', version: versions.embedded_elasticsearch
+}
+
+compileJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+}
+
+test {
+    systemProperties['path.home'] = System.getProperty("user.dir")
+    systemProperties['elasticsearchVersion'] = versions.elasticsearch
+    testLogging {
+        showStandardStreams = false
+        exceptionFormat = 'full'
+    }
+}
+
+task makePluginDescriptor(type: Copy) {
+    from 'src/main/templates'
+    into 'build/tmp/plugin'
+    expand([
+            'descriptor': [
+                    'name'                : pluginName,
+                    'classname'           : pluginClassname,
+                    'description'         : pluginDescription,
+                    'jvm'                 : true,
+                    'site'                : false,
+                    'isolated'            : true,
+                    'version'             : project.property('version'),
+                    'javaVersion'         : project.property('targetCompatibility'),
+                    'elasticsearchVersion': versions.elasticsearch
+            ]
+    ])
+}
+
+task buildPluginZip(type: Zip, dependsOn: [':jar', ':makePluginDescriptor']) {
+    from files(libsDir)
+    from configurations.releaseJars
+    from 'build/tmp/plugin'
+    classifier = 'plugin'
+}
+
+task unpackPlugin(type: Copy, dependsOn: [':buildPluginZip']) {
+    delete "plugins"
+    from files(libsDir)
+    from configurations.releaseJars
+    from 'build/tmp/plugin'
+    into "plugins/${pluginName}"
+}
+
+clean {
+    delete "plugins"
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    from sourceSets.main.allSource
+    classifier 'sources'
+}
+
+artifacts {
+    archives sourcesJar
+    archives buildPluginZip
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4.1'
+}
