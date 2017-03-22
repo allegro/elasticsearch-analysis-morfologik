@@ -1,4 +1,5 @@
 # Morfologik Polish Lemmatizer plugin for Elasticsearch #
+[![Build Status](https://travis-ci.org/allegro/elasticsearch-analysis-morfologik.svg?branch=master)](https://travis-ci.org/allegro/elasticsearch-analysis-morfologik)
 
 Morfologik plugin for elasticsearch 2.x, lucene-analyzers-morfologik wrapper for elasticsearch.
 
