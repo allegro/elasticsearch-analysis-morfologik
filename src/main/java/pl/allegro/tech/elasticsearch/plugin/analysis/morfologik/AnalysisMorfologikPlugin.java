@@ -1,40 +1,30 @@
 package pl.allegro.tech.elasticsearch.plugin.analysis.morfologik;
 
-import org.elasticsearch.common.inject.Inject;
-import org.elasticsearch.common.inject.Module;
-import org.elasticsearch.index.analysis.AnalysisModule;
+import org.apache.lucene.analysis.Analyzer;
+import org.elasticsearch.index.analysis.AnalyzerProvider;
+import org.elasticsearch.index.analysis.TokenFilterFactory;
+import org.elasticsearch.indices.analysis.AnalysisModule.AnalysisProvider;
+import org.elasticsearch.plugins.AnalysisPlugin;
 import org.elasticsearch.plugins.Plugin;
-import pl.allegro.tech.elasticsearch.index.analysis.pl.MorfologikAnalysisBinderProcessor;
-import pl.allegro.tech.elasticsearch.indices.analysis.pl.MorfologikIndicesAnalysisModule;
+import pl.allegro.tech.elasticsearch.index.analysis.pl.MorfologikAnalyzerProvider;
+import pl.allegro.tech.elasticsearch.index.analysis.pl.MorfologikTokenFilterFactory;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.Map;
 
-public class AnalysisMorfologikPlugin extends Plugin {
+import static java.util.Collections.singletonMap;
+
+public class AnalysisMorfologikPlugin extends Plugin implements AnalysisPlugin {
 
     public static final String ANALYZER_NAME = "morfologik";
     public static final String FILTER_NAME = "morfologik_stem";
 
-    @Inject
-    public AnalysisMorfologikPlugin() {
+    @Override
+    public Map<String, AnalysisProvider<TokenFilterFactory>> getTokenFilters() {
+        return singletonMap(FILTER_NAME, MorfologikTokenFilterFactory::new);
     }
 
     @Override
-    public String name() {
-        return "analysis-morfologik";
-    }
-
-    @Override
-    public String description() {
-        return "Morfologik Polish Lemmatizer plugin for Elasticsearch";
-    }
-
-    @Override
-    public Collection<Module> nodeModules() {
-        return Collections.<Module>singletonList(new MorfologikIndicesAnalysisModule());
-    }
-
-    public void onModule(AnalysisModule module) {
-        module.addProcessor(new MorfologikAnalysisBinderProcessor());
+    public Map<String, AnalysisProvider<AnalyzerProvider<? extends Analyzer>>> getAnalyzers() {
+        return singletonMap(ANALYZER_NAME, MorfologikAnalyzerProvider::new);
     }
 }
