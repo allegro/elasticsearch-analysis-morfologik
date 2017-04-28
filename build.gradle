@@ -1,6 +1,3 @@
-group = 'pl.allegro.tech.elasticsearch.plugin'
-version = versions.elasticsearch
-
 buildscript {
     ext {
         pluginName = 'analysis-morfologik'
@@ -10,18 +7,24 @@ buildscript {
                 'elasticsearch'         : '5.0.0',
                 'lucene'                : '6.2.0',
                 'log4j'                 : '2.6.2',
-                'junit'                 : '4.12',
                 'embedded_elasticsearch': '2.1.0',
                 'spock'                 : '1.0-groovy-2.4'
         ]
     }
 }
 
+plugins {
+    id 'com.bmuschko.nexus' version '2.3.1'
+    id "io.codearte.nexus-staging" version "0.8.0"
+}
+
 apply plugin: 'java'
 apply plugin: 'groovy'
 
+group = 'pl.allegro.tech.elasticsearch.plugin'
+version = versions.elasticsearch
+
 repositories {
-    mavenLocal()
     mavenCentral()
 }
 
@@ -102,20 +105,58 @@ task unpackPlugin(type: Copy, dependsOn: [':buildPluginZip']) {
     into "plugins/${pluginName}"
 }
 
+tasks.withType(Test) {
+    testLogging {
+        exceptionFormat = 'full'
+        events = ["failed", "skipped", "passed"]
+        showCauses = true
+        showStackTraces = true
+    }
+}
+
 clean {
     delete "plugins"
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    from sourceSets.main.allSource
-    classifier 'sources'
-}
-
 artifacts {
-    archives sourcesJar
     archives buildPluginZip
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '3.4.1'
+}
+
+nexusStaging {
+    packageGroup = 'pl.allegro'
+    numberOfRetries = 15
+    delayBetweenRetriesInMillis = 5000
+}
+
+modifyPom {
+    project {
+        name 'elasticsearch-analysis-morfologik'
+        description 'Morfologik Polish Lemmatizer plugin for Elasticsearch'
+        url 'https://github.com/allegro/elasticsearch-analysis-morfologik'
+        inceptionYear '2017'
+
+        scm {
+            url 'https://github.com/allegro/elasticsearch-analysis-morfologik'
+            connection 'scm:git@github.com:allegro/elasticsearch-analysis-morfologik.git'
+            developerConnection 'scm:git@github.com:allegro/elasticsearch-analysis-morfologik.git'
+        }
+
+        licenses {
+            license {
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            }
+        }
+
+        developers {
+            developer {
+                id 'yukon'
+                name 'YUKON'
+            }
+        }
+    }
 }
