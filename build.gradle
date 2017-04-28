@@ -1,7 +1,8 @@
-group = 'pl.allegro.tech.elasticsearch.plugin'
-version = versions.elasticsearch
-
 buildscript {
+    repositories { mavenCentral() }
+    dependencies {
+        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.3'
+    }
     ext {
         pluginName = 'analysis-morfologik'
         pluginClassname = 'pl.allegro.tech.elasticsearch.plugin.analysis.morfologik.AnalysisMorfologikPlugin'
@@ -17,8 +18,16 @@ buildscript {
     }
 }
 
+plugins {
+    id 'com.bmuschko.nexus' version '2.3.1'
+}
+
+group = 'pl.allegro.tech.elasticsearch.plugin'
+version = versions.elasticsearch
+
 apply plugin: 'java'
 apply plugin: 'groovy'
+apply plugin: 'io.codearte.nexus-staging'
 
 repositories {
     mavenLocal()
@@ -103,16 +112,45 @@ clean {
     delete "plugins"
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    from sourceSets.main.allSource
-    classifier 'sources'
-}
-
 artifacts {
-    archives sourcesJar
     archives buildPluginZip
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '3.4.1'
+}
+
+nexusStaging {
+    packageGroup = 'pl.allegro'
+    numberOfRetries = 15
+    delayBetweenRetriesInMillis = 5000
+}
+
+modifyPom {
+    project {
+        name 'elasticsearch-analysis-morfologik'
+        description 'Morfologik Polish Lemmatizer plugin for Elasticsearch'
+        url 'https://github.com/allegro/elasticsearch-analysis-morfologik'
+        inceptionYear '2017'
+
+        scm {
+            url 'https://github.com/allegro/elasticsearch-analysis-morfologik'
+            connection 'scm:git@github.com:allegro/elasticsearch-analysis-morfologik.git'
+            developerConnection 'scm:git@github.com:allegro/elasticsearch-analysis-morfologik.git'
+        }
+
+        licenses {
+            license {
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            }
+        }
+
+        developers {
+            developer {
+                id 'yukon'
+                name 'YUKON'
+            }
+        }
+    }
 }
