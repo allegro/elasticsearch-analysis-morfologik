@@ -1,15 +1,16 @@
 buildscript {
     repositories { mavenCentral() }
     dependencies {
-        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.3'
+        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.8.0'
     }
+
     ext {
         pluginName = 'analysis-morfologik'
         pluginClassname = 'pl.allegro.tech.elasticsearch.plugin.analysis.morfologik.AnalysisMorfologikPlugin'
         pluginDescription = 'Morfologik Polish Lemmatizer plugin for Elasticsearch'
         versions = [
-                'elasticsearch'         : '2.4.1',
-                'lucene'                : '5.5.0',
+                'elasticsearch'         : '2.4.2',
+                'lucene'                : '5.5.2',
                 'log4j'                 : '2.6.2',
                 'junit'                 : '4.12',
                 'embedded_elasticsearch': '2.1.0',
@@ -20,6 +21,7 @@ buildscript {
 
 plugins {
     id 'com.bmuschko.nexus' version '2.3.1'
+    id "io.codearte.nexus-staging" version "0.8.0"
 }
 
 group = 'pl.allegro.tech.elasticsearch.plugin'
@@ -27,10 +29,8 @@ version = versions.elasticsearch
 
 apply plugin: 'java'
 apply plugin: 'groovy'
-apply plugin: 'io.codearte.nexus-staging'
 
 repositories {
-    mavenLocal()
     mavenCentral()
 }
 
@@ -106,6 +106,15 @@ task unpackPlugin(type: Copy, dependsOn: [':buildPluginZip']) {
     from configurations.releaseJars
     from 'build/tmp/plugin'
     into "plugins/${pluginName}"
+}
+
+tasks.withType(Test) {
+    testLogging {
+        exceptionFormat = 'full'
+        events = ["failed", "skipped", "passed"]
+        showCauses = true
+        showStackTraces = true
+    }
 }
 
 clean {

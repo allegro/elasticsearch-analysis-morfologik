@@ -23,6 +23,7 @@ class MorfologikPluginIntegrationTest extends Specification {
             ELASTIC_VERSION + "-plugin.zip"
 
     static final embeddedElastic = EmbeddedElastic.builder()
+            .withEsJavaOpts("-Xms128m -Xmx512m")
             .withElasticVersion(ELASTIC_VERSION)
             .withSetting(TRANSPORT_TCP_PORT, ELS_PORT)
             .withSetting(CLUSTER_NAME, ELS_CLUSTER_NAME)
@@ -65,8 +66,8 @@ class MorfologikPluginIntegrationTest extends Specification {
                 settingsBuilder()
                         .put("cluster.name", ELS_CLUSTER_NAME)
                         .build())
-                .build();
-        transportClient.addTransportAddress(new InetSocketTransportAddress(InetAddress.loopbackAddress, ELS_PORT));
+                .build()
+        transportClient.addTransportAddress(new InetSocketTransportAddress(InetAddress.loopbackAddress, ELS_PORT))
         transportClient
     }
 
