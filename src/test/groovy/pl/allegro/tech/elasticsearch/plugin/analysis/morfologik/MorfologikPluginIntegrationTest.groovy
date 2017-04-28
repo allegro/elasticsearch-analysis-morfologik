@@ -7,6 +7,7 @@ import org.elasticsearch.transport.client.PreBuiltTransportClient
 import pl.allegro.tech.embeddedelasticsearch.EmbeddedElastic
 import spock.lang.Specification
 
+import static java.util.concurrent.TimeUnit.MINUTES
 import static pl.allegro.tech.elasticsearch.plugin.analysis.morfologik.AnalysisMorfologikPlugin.ANALYZER_NAME
 import static pl.allegro.tech.elasticsearch.plugin.analysis.morfologik.AnalysisMorfologikPlugin.FILTER_NAME
 import static pl.allegro.tech.embeddedelasticsearch.PopularProperties.CLUSTER_NAME
@@ -25,11 +26,13 @@ class MorfologikPluginIntegrationTest extends Specification {
             ELASTIC_VERSION + "-plugin.zip"
 
     static final embeddedElastic = EmbeddedElastic.builder()
+            .withEsJavaOpts("-Xms128m -Xmx512m")
             .withElasticVersion(ELASTIC_VERSION)
             .withSetting(TRANSPORT_TCP_PORT, ELS_PORT)
             .withSetting(CLUSTER_NAME, ELS_CLUSTER_NAME)
             .withSetting(HTTP_PORT, ELS_HTTP_PORT)
             .withPlugin(new File(MORFOLOGIK_PLUGIN_PATH).toURI().toURL().toString())
+            .withStartTimeout(1, MINUTES)
             .build()
             .start()
 
