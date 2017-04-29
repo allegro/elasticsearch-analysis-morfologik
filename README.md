@@ -1,7 +1,8 @@
 # Morfologik Polish Lemmatizer plugin for Elasticsearch #
 [![Build Status](https://travis-ci.org/allegro/elasticsearch-analysis-morfologik.svg?branch=master)](https://travis-ci.org/allegro/elasticsearch-analysis-morfologik)
+![Maven Central](https://maven-badges.herokuapp.com/maven-central/pl.allegro.tech.elasticsearch.plugin/elasticsearch-analysis-morfologik/badge.svg)
 
-Morfologik plugin for elasticsearch 2.x, lucene-analyzers-morfologik wrapper for elasticsearch.
+Morfologik plugin for elasticsearch 5.x and 2.x. It's lucene-analyzers-morfologik wrapper for elasticsearch.
 
 Plugin provide "morfologik" analyzer and "morfologik_stem" token filter.
 
@@ -63,4 +64,23 @@ Response:
 ```
 
 ## Supported elasticsearch versions: ##
-- 2.4.1
+
+All ready to install plugins are deployed to maven central:
+http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/
+
+### Elasticsearch 5.x
+- 5.0.x (5.0.0, 5.0.1, 5.0.2)
+- 5.1.x (5.1.1, 5.1.2)
+- 5.2.x (5.2.0, 5.2.1, 5.2.2)
+- 5.3.x (5.3.0, 5.3.1)
+
+#### Install in Elasticsearch 5.x
+tip: select proper version in url to plugin.
+``./bin/elasticsearch-plugin install http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/5.3.1/elasticsearch-analysis-morfologik-5.3.1-plugin.zip``
+
+### Elasticsearch 2.x
+- 2.4.x (2.4.1, 2.4.2, 2.4.3, 2.4.4)
+
+#### Install in Elasticsearch 2.x
+tip: select proper version in url to plugin. 
+``./bin/plugin install http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/2.4.2/elasticsearch-analysis-morfologik-2.4.2-plugin.zip``
