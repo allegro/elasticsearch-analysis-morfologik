@@ -73,6 +73,7 @@ http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsear
 - 5.1.x (5.1.1, 5.1.2)
 - 5.2.x (5.2.0, 5.2.1, 5.2.2)
 - 5.3.x (5.3.0, 5.3.1, 5.3.2)
+- 5.4.x (5.4.0)
 
 #### Install in Elasticsearch 5.x
 tip: select proper version in url to plugin.
