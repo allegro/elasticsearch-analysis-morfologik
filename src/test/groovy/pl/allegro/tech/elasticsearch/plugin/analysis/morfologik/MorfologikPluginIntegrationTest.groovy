@@ -22,8 +22,8 @@ class MorfologikPluginIntegrationTest extends Specification {
     static final int ELS_PORT = 9301
     static final int ELS_HTTP_PORT = 9201
 
-    static final String MORFOLOGIK_PLUGIN_PATH = "build/distributions/elasticsearch-analysis-morfologik-" +
-            ELASTIC_VERSION + "-plugin.zip"
+    static final String MORFOLOGIK_PLUGIN_PATH =
+            "build/distributions/elasticsearch-analysis-morfologik-" + ELASTIC_VERSION + ".zip"
 
     static final embeddedElastic = EmbeddedElastic.builder()
             .withEsJavaOpts("-Xms128m -Xmx512m")
@@ -70,7 +70,7 @@ class MorfologikPluginIntegrationTest extends Specification {
                 Settings.builder()
                         .put("cluster.name", ELS_CLUSTER_NAME).build()
         )
-        transportClient.addTransportAddress(new InetSocketTransportAddress(InetAddress.loopbackAddress, ELS_PORT));
+        transportClient.addTransportAddress(new InetSocketTransportAddress(InetAddress.loopbackAddress, ELS_PORT))
         transportClient
     }
 
