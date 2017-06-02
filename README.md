@@ -44,7 +44,7 @@ Request:
 GET _analyze
 {
   "tokenizer": "standard",
-  "token_filter": ["morfologik_stem"],
+  "filter": ["morfologik_stem"],
   "text": "jestem"
 }
 ```
@@ -80,7 +80,6 @@ version >= 5.4.1
 ```
 ./bin/elasticsearch-plugin install pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:5.4.1
 ```
-
 version <= 5.4.0 
 ```
 ./bin/elasticsearch-plugin install http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/5.3.1/elasticsearch-analysis-morfologik-5.3.1-plugin.zip
