@@ -4,8 +4,8 @@ buildscript {
         pluginClassname = 'pl.allegro.tech.elasticsearch.plugin.analysis.morfologik.AnalysisMorfologikPlugin'
         pluginDescription = 'Morfologik Polish Lemmatizer plugin for Elasticsearch'
         versions = [
-                'elasticsearch'         : '5.4.0',
-                'lucene'                : '6.5.0',
+                'elasticsearch'         : '5.4.1',
+                'lucene'                : '6.5.1',
                 'log4j'                 : '2.6.2',
                 'embedded_elasticsearch': '2.1.0',
                 'spock'                 : '1.0-groovy-2.4'
