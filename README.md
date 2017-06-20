@@ -73,16 +73,18 @@ http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsear
 - 5.1.x (5.1.1, 5.1.2)
 - 5.2.x (5.2.0, 5.2.1, 5.2.2)
 - 5.3.x (5.3.0, 5.3.1, 5.3.2)
-- 5.4.x (5.4.0, 5.4.1)
+- 5.4.x (5.4.0, 5.4.1, 5.4.2)
 
 #### Install in Elasticsearch 5.x
 version >= 5.4.1 
 ```
-./bin/elasticsearch-plugin install pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:5.4.1
+<ES directory>/bin/elasticsearch-plugin install \
+  pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:5.4.2
 ```
 version <= 5.4.0 
 ```
-./bin/elasticsearch-plugin install http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/5.3.1/elasticsearch-analysis-morfologik-5.3.1-plugin.zip
+<ES directory>/bin/elasticsearch-plugin install \
+  http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/5.3.1/elasticsearch-analysis-morfologik-5.3.1-plugin.zip
 ```
 *tip: select proper version in url to plugin*
 
@@ -91,6 +93,7 @@ version <= 5.4.0
 
 #### Install in Elasticsearch 2.x
 ```
-./bin/plugin install http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/2.4.2/elasticsearch-analysis-morfologik-2.4.2-plugin.zip
+<ES directory>/bin/plugin install \
+  http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/2.4.2/elasticsearch-analysis-morfologik-2.4.2-plugin.zip
 ```
 *tip: select proper version in url to plugin*
