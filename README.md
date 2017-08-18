@@ -90,7 +90,7 @@ version <= 5.4.0
 *tip: select proper version in url to plugin*
 
 ### Elasticsearch 2.x
-- 2.4.x (2.4.1, 2.4.2, 2.4.3, 2.4.4)
+- 2.4.x (2.4.1, 2.4.2, 2.4.3, 2.4.4, 2.4.6)
 
 #### Install in Elasticsearch 2.x
 ```
