@@ -4,8 +4,8 @@ buildscript {
         pluginClassname = 'pl.allegro.tech.elasticsearch.plugin.analysis.morfologik.AnalysisMorfologikPlugin'
         pluginDescription = 'Morfologik Polish Lemmatizer plugin for Elasticsearch'
         versions = [
-                'elasticsearch'         : '6.0.0-beta1',
-                'lucene'                : '7.0.0-snapshot-00142c9',
+                'elasticsearch'         : '6.0.0-beta2',
+                'lucene'                : '7.0.0-snapshot-a128fcb',
                 'log4j'                 : '2.6.2',
                 'embedded_elasticsearch': '2.4.0',
                 'spock'                 : '1.0-groovy-2.4'
@@ -28,7 +28,7 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven {
-        url "http://s3.amazonaws.com/download.elasticsearch.org/lucenesnapshots/00142c9"
+        url "http://s3.amazonaws.com/download.elasticsearch.org/lucenesnapshots/a128fcb"
     }
 }
 
