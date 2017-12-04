@@ -2,7 +2,7 @@ package pl.allegro.tech.elasticsearch.plugin.analysis.morfologik
 
 import org.elasticsearch.action.admin.indices.analyze.AnalyzeRequest
 import org.elasticsearch.common.settings.Settings
-import org.elasticsearch.common.transport.InetSocketTransportAddress
+import org.elasticsearch.common.transport.TransportAddress
 import org.elasticsearch.transport.client.PreBuiltTransportClient
 import pl.allegro.tech.embeddedelasticsearch.EmbeddedElastic
 import spock.lang.Specification
@@ -61,7 +61,7 @@ class MorfologikPluginIntegrationTest extends Specification {
 
     static def createClient() {
         def transportClient = new PreBuiltTransportClient(Settings.EMPTY)
-        transportClient.addTransportAddress(new InetSocketTransportAddress(InetAddress.loopbackAddress, ELS_PORT))
+        transportClient.addTransportAddress(new TransportAddress(InetAddress.loopbackAddress, ELS_PORT))
         transportClient
     }
 }
