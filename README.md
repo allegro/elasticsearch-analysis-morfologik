@@ -68,7 +68,7 @@ Response:
 All ready to install plugins are deployed to maven central:
 http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/
 
-### Elasticsearch 5.x
+### Elasticsearch 5.x and 6.x
 - 5.0.x (5.0.0, 5.0.1, 5.0.2)
 - 5.1.x (5.1.1, 5.1.2)
 - 5.2.x (5.2.0, 5.2.1, 5.2.2)
@@ -76,12 +76,13 @@ http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsear
 - 5.4.x (5.4.0, 5.4.1, 5.4.2, 5.4.3)
 - 5.5.x (5.5.0, 5.5.1, 5.5.2)
 - 5.6.x (5.6.0, 5.6.1, 5.6.2, 5.6.3, 5.6.4, 5.6.5)
+- 6.0.x (6.0.0)
 
-#### Install in Elasticsearch 5.x
+#### Install in Elasticsearch 5.x and 6.x
 version >= 5.4.1 
 ```
 <ES directory>/bin/elasticsearch-plugin install \
-  pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:5.6.5
+  pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:6.0.0
 ```
 version <= 5.4.0 
 ```
