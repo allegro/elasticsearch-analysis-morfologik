@@ -6,16 +6,17 @@ buildscript {
         versions = [
                 'elasticsearch'         : '6.2.3',
                 'lucene'                : '7.2.1',
-                'log4j'                 : '2.9.0',
+                'log4j'                 : '2.11.0',
                 'embedded_elasticsearch': '2.5.0',
-                'spock'                 : '1.1-groovy-2.4'
+                'spock'                 : '1.1-groovy-2.4',
+                'groovy'                : '2.4.15'
         ]
     }
 }
 
 plugins {
     id 'com.bmuschko.nexus' version '2.3.1'
-    id "io.codearte.nexus-staging" version "0.8.0"
+    id 'io.codearte.nexus-staging' version '0.11.0'
 }
 
 apply plugin: 'java'
@@ -43,14 +44,17 @@ configurations {
 }
 
 dependencies {
+    def excludeLog4j = {
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
+    }
+
     compile group: 'org.elasticsearch', name: 'elasticsearch', version: versions.elasticsearch
     compile group: 'org.apache.lucene', name: 'lucene-analyzers-morfologik', version: versions.lucene
-    testCompile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: versions.log4j
-    testCompile group: 'org.apache.logging.log4j', name: 'log4j-core', version: versions.log4j
-    testCompile group: 'org.spockframework', name: 'spock-core', version: versions.spock
+    testCompile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: versions.log4j, excludeLog4j
     testCompile group: 'pl.allegro.tech', name: 'embedded-elasticsearch', version: versions.embedded_elasticsearch
-    testCompile group: 'org.elasticsearch.client', name: 'transport', version: versions.elasticsearch
-
+    testCompile group: 'org.elasticsearch.client', name: 'transport', version: versions.elasticsearch, excludeLog4j
+    testCompile group: 'org.spockframework', name: 'spock-core', version: versions.spock
+    testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version: versions.groovy
 }
 
 compileJava {
@@ -119,7 +123,7 @@ artifacts {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.5.1'
+    gradleVersion = '4.7'
 }
 
 nexusStaging {

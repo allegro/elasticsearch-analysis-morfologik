@@ -8,7 +8,6 @@ import pl.allegro.tech.embeddedelasticsearch.EmbeddedElastic
 import spock.lang.Specification
 
 import static java.util.concurrent.TimeUnit.MINUTES
-import static java.util.stream.Collectors.joining
 import static pl.allegro.tech.elasticsearch.plugin.analysis.morfologik.AnalysisMorfologikPlugin.ANALYZER_NAME
 import static pl.allegro.tech.elasticsearch.plugin.analysis.morfologik.AnalysisMorfologikPlugin.FILTER_NAME
 import static pl.allegro.tech.embeddedelasticsearch.PopularProperties.HTTP_PORT
@@ -56,7 +55,7 @@ class MorfologikPluginIntegrationTest extends Specification {
 
     private static String analyzeAndGetFirstTermResult(AnalyzeRequest analyzeRequest) {
         def result = elasticsearchClient.admin().indices().analyze(analyzeRequest).get()
-        result.tokens.stream().map({ it.term }).collect(joining(" "))
+        result.collect { it.term }.join(" ")
     }
 
     static def createClient() {
