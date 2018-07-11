@@ -72,7 +72,7 @@ http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsear
 - 6.0.x (6.0.0, 6.0.1)
 - 6.1.x (6.1.0, 6.1.1, 6.1.2, 6.1.3)
 - 6.2.x (6.2.1, 6.2.2, 6.2.3, 6.2.4)
-- 6.3.x (6.3.0)
+- 6.3.x (6.3.0, 6.3.1)
 
 ### Elasticsearch 5.x
 - 5.0.x (5.0.0, 5.0.1, 5.0.2)
@@ -86,7 +86,7 @@ http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsear
 #### Install in Elasticsearch 5.x and 6.x
 ```
 <ES directory>/bin/elasticsearch-plugin install \
-  pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:6.3.0
+  pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:6.3.1
 ```
 
 for version <= 5.4.0 
