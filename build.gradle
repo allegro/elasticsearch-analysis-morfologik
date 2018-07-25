@@ -44,15 +44,11 @@ configurations {
 }
 
 dependencies {
-    def excludeLog4j = {
-        exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
-    }
-
     compile group: 'org.elasticsearch', name: 'elasticsearch', version: versions.elasticsearch
     compile group: 'org.apache.lucene', name: 'lucene-analyzers-morfologik', version: versions.lucene
-    testCompile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: versions.log4j, excludeLog4j
+    testCompile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: versions.log4j
     testCompile group: 'pl.allegro.tech', name: 'embedded-elasticsearch', version: versions.embedded_elasticsearch
-    testCompile group: 'org.elasticsearch.client', name: 'transport', version: versions.elasticsearch, excludeLog4j
+    testCompile group: 'org.elasticsearch.client', name: 'transport', version: versions.elasticsearch
     testCompile group: 'org.spockframework', name: 'spock-core', version: versions.spock
     testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version: versions.groovy
 }
@@ -62,8 +58,8 @@ compileJava {
     targetCompatibility = 1.8
 }
 
-tasks.withType(JavaCompile) {
-    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+tasks.withType(GroovyCompile) {
+    options.compilerArgs << "-proc:none"
 }
 
 test {
