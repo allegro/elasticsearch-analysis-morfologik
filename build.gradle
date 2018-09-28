@@ -8,8 +8,8 @@ buildscript {
                 'lucene'                : '7.4.0',
                 'log4j'                 : '2.11.0',
                 'embedded_elasticsearch': '2.7.0',
-                'spock'                 : '1.1-groovy-2.4',
-                'groovy'                : '2.4.15'
+                'spock'                 : '1.2-groovy-2.5',
+                'groovy'                : '2.5.2'
         ]
     }
 }
@@ -114,7 +114,7 @@ artifacts {
 }
 
 wrapper {
-    gradleVersion = '4.10'
+    gradleVersion = '4.10.2'
 }
 
 nexusStaging {
