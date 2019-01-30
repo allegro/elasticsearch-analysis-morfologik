@@ -73,7 +73,7 @@ test {
 
 task makePluginDescriptor(type: Copy) {
     from 'src/main/templates'
-    into 'build/tmp/plugin'
+    into "${project.buildDir}/tmp/plugin"
     expand([
             'descriptor': [
                     'name'                : pluginName,
@@ -87,14 +87,14 @@ task makePluginDescriptor(type: Copy) {
 }
 
 task buildPluginZip(type: Zip, dependsOn: [':jar', ':makePluginDescriptor']) {
-    from files(libsDir)
+    from "${project.buildDir}/${libsDirName}"
     from configurations.releaseJars
     from 'build/tmp/plugin'
 }
 
 task unpackPlugin(type: Copy, dependsOn: [':buildPluginZip']) {
     delete "plugins"
-    from files(libsDir)
+    from "${project.buildDir}/${libsDirName}"
     from configurations.releaseJars
     from 'build/tmp/plugin'
     into "plugins/${pluginName}"
@@ -114,7 +114,7 @@ artifacts {
 }
 
 wrapper {
-    gradleVersion = '5.0'
+    gradleVersion = '5.1.1'
 }
 
 nexusStaging {
