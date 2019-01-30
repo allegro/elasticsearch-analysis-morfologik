@@ -8,9 +8,14 @@ Plugin provide "morfologik" analyzer and "morfologik_stem" token filter.
 
 Originally created by https://github.com/monterail/elasticsearch-analysis-morfologik
 
-## Build ##
+## Install
+  
+```
+<ES directory>/bin/elasticsearch-plugin install \
+  pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:6.6.0
+```
 
-`./gradlew clean build`
+*tip: select proper plugin version, should be the same as elasticsearch version*
 
 ## Examples ## 
 
@@ -86,25 +91,28 @@ http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsear
 - 5.5.x (5.5.0, 5.5.1, 5.5.2)
 - 5.6.x (5.6.0, 5.6.1, 5.6.2, 5.6.3, 5.6.4, 5.6.5, 5.6.10)
 
-#### Install in Elasticsearch 5.x and 6.x
-```
-<ES directory>/bin/elasticsearch-plugin install \
-  pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:6.6.0
-```
-
-for version <= 5.4.0 
-```
-<ES directory>/bin/elasticsearch-plugin install \
-  http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/5.3.1/elasticsearch-analysis-morfologik-5.3.1-plugin.zip
-```
-*tip: select proper version in url to plugin*
-
 ### Elasticsearch 2.x
 - 2.4.x (2.4.1, 2.4.2, 2.4.3, 2.4.4, 2.4.6)
+
+
+#### Install in Elasticsearch for version <= 5.4.0
+ 
+```
+<ES directory>/bin/elasticsearch-plugin install \
+  http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/5.4.0/elasticsearch-analysis-morfologik-5.4.0-plugin.zip
+```
+
+*tip: select proper plugin version, should be the same as elasticsearch version*
+
 
 #### Install in Elasticsearch 2.x
 ```
 <ES directory>/bin/plugin install \
   http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/2.4.2/elasticsearch-analysis-morfologik-2.4.2-plugin.zip
 ```
-*tip: select proper version in url to plugin*
+*tip: select proper plugin version, should be the same as elasticsearch version*
+
+## Build ##
+
+`./gradlew clean build`
+
