@@ -5,4 +5,5 @@
 .project
 .gradle
 build
+out
 classes
