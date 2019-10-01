@@ -1,66 +1,61 @@
 package pl.allegro.tech.elasticsearch.plugin.analysis.morfologik
 
-import org.elasticsearch.action.admin.indices.analyze.AnalyzeRequest
-import org.elasticsearch.common.settings.Settings
-import org.elasticsearch.common.transport.TransportAddress
-import org.elasticsearch.transport.client.PreBuiltTransportClient
-import pl.allegro.tech.embeddedelasticsearch.EmbeddedElastic
+import org.apache.http.HttpHost
+import org.elasticsearch.client.RequestOptions
+import org.elasticsearch.client.RestClient
+import org.elasticsearch.client.RestHighLevelClient
+import org.elasticsearch.client.indices.AnalyzeRequest
+import org.elasticsearch.client.indices.AnalyzeResponse
+import org.junit.AfterClass
+import org.junit.BeforeClass
 import spock.lang.Specification
 
-import static java.util.concurrent.TimeUnit.MINUTES
 import static pl.allegro.tech.elasticsearch.plugin.analysis.morfologik.AnalysisMorfologikPlugin.ANALYZER_NAME
 import static pl.allegro.tech.elasticsearch.plugin.analysis.morfologik.AnalysisMorfologikPlugin.FILTER_NAME
-import static pl.allegro.tech.embeddedelasticsearch.PopularProperties.HTTP_PORT
-import static pl.allegro.tech.embeddedelasticsearch.PopularProperties.TRANSPORT_TCP_PORT
 
 class MorfologikPluginIntegrationTest extends Specification {
-
     static final String ELASTIC_VERSION = System.properties['elasticsearchVersion']
-    static final int ELS_PORT = 9301
-    static final int ELS_HTTP_PORT = 9201
+    static final String MORFOLOGIK_FILE_NAME = "elasticsearch-analysis-morfologik-${ELASTIC_VERSION}.zip"
+    static final String MORFOLOGIK_PLUGIN_PATH = "build/distributions/$MORFOLOGIK_FILE_NAME"
+    static final ElasticsearchWithPluginContainer container = new ElasticsearchWithPluginContainer("docker.elastic.co/elasticsearch/elasticsearch-oss:$ELASTIC_VERSION")
+    static RestHighLevelClient elasticsearchClient
 
-    static final String MORFOLOGIK_PLUGIN_PATH =
-            "build/distributions/elasticsearch-analysis-morfologik-" + ELASTIC_VERSION + ".zip"
+    @BeforeClass
+    void setupContainerWithPlugin() {
+        container.withPlugin(new File(MORFOLOGIK_PLUGIN_PATH));
+        container.start()
+        elasticsearchClient = createClient()
+    }
 
-    static final embeddedElastic = EmbeddedElastic.builder()
-            .withEsJavaOpts("-Xms128m -Xmx512m")
-            .withElasticVersion(ELASTIC_VERSION)
-            .withSetting(TRANSPORT_TCP_PORT, ELS_PORT)
-            .withSetting(HTTP_PORT, ELS_HTTP_PORT)
-            .withPlugin(new File(MORFOLOGIK_PLUGIN_PATH).toURI().toURL().toString())
-            .withStartTimeout(1, MINUTES)
-            .build()
-            .start()
-
-    static final elasticsearchClient = createClient()
-
-    def cleanupSpec() {
-        embeddedElastic.stop()
+    @AfterClass
+    void stopContainer() {
+        container.stop()
     }
 
     def "morfologik analyzer should work"() {
+        given:
+            AnalyzeRequest request = AnalyzeRequest.withGlobalAnalyzer(ANALYZER_NAME, "jestem")
         expect:
-        analyzeAndGetFirstTermResult(new AnalyzeRequest()
-                .analyzer(ANALYZER_NAME)
-                .text("jestem")) == "być"
+            analyzeAndGetFirstTermResult(request) == "być"
     }
 
     def "morfologik token filter should work"() {
+        given:
+            AnalyzeRequest requestWithFilter = AnalyzeRequest.buildCustomAnalyzer("standard")
+                    .addTokenFilter(FILTER_NAME)
+                    .build("jestem")
         expect:
-        analyzeAndGetFirstTermResult(new AnalyzeRequest()
-                .tokenizer("standard")
-                .addTokenFilter(FILTER_NAME)
-                .text("jestem")) == "być"
+            analyzeAndGetFirstTermResult(requestWithFilter) == "być"
     }
 
     private static String analyzeAndGetFirstTermResult(AnalyzeRequest analyzeRequest) {
-        def result = elasticsearchClient.admin().indices().analyze(analyzeRequest).get()
-        result.collect { it.term }.join(" ")
+        AnalyzeResponse result = elasticsearchClient.indices().analyze(analyzeRequest, RequestOptions.DEFAULT)
+        return result.tokens.collect { it.term }.join(" ")
     }
 
-    static def createClient() {
-        def transportClient = new PreBuiltTransportClient(Settings.EMPTY)
-        transportClient.addTransportAddress(new TransportAddress(InetAddress.loopbackAddress, ELS_PORT))
-        transportClient
+    static RestHighLevelClient createClient() {
+        return new RestHighLevelClient(RestClient.builder(
+                HttpHost.create(container.httpHostAddress)
+        ))
     }
 }
