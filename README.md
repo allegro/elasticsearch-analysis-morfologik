@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/allegro/elasticsearch-analysis-morfologik.svg?branch=master)](https://travis-ci.org/allegro/elasticsearch-analysis-morfologik)
 [![Maven Central](https://img.shields.io/maven-metadata/v/http/central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/maven-metadata.xml.svg)](http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/)
 
-Morfologik plugin for elasticsearch 6.x, 5.x and 2.x. It's lucene-analyzers-morfologik wrapper for elasticsearch.
+Morfologik plugin for elasticsearch 7.x, 6.x, 5.x and 2.x. It's lucene-analyzers-morfologik wrapper for elasticsearch.
 
 Plugin provide "morfologik" analyzer and "morfologik_stem" token filter.
 
@@ -12,7 +12,7 @@ Originally created by https://github.com/monterail/elasticsearch-analysis-morfol
   
 ```
 <ES directory>/bin/elasticsearch-plugin install \
-  pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:6.8.3
+  pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:7.3.2
 ```
 
 *tip: select proper plugin version, should be the same as elasticsearch version*
@@ -72,6 +72,9 @@ Response:
 
 All ready to install plugins are deployed to maven central:
 http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/
+
+### Elasticsearch 7.x
+- 7.3.x (7.3.2)
 
 ### Elasticsearch 6.x
 - 6.0.x (6.0.0, 6.0.1)
