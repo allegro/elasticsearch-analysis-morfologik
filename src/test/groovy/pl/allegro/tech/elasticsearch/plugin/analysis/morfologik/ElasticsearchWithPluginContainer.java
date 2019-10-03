@@ -36,19 +36,19 @@ public class ElasticsearchWithPluginContainer extends GenericContainer<Elasticse
 
     public ElasticsearchWithPluginContainer withPlugin(File pluginZipFile) {
         plugin = pluginZipFile;
-        return this.withFileSystemBind(pluginZipFile.getPath(), "/tmp/plugins/" + pluginZipFile.getName());
+        return this.withFileSystemBind(plugin.getPath(), "/tmp/plugins/" + plugin.getName());
     }
 
     private ImageFromDockerfile prepareImage(String imageName) {
         String pluginContainerPath = plugin == null ? null : ("/tmp/plugins/" + plugin.getName());
         ImageFromDockerfile image = new ImageFromDockerfile()
-            .withDockerfileFromBuilder(builder -> {
-                builder.from(imageName);
-                if (pluginContainerPath != null) {
-                    builder.copy(pluginContainerPath, pluginContainerPath);
-                    builder.run("bin/elasticsearch-plugin", "install", "file://" + pluginContainerPath);
-                }
-            });
+                .withDockerfileFromBuilder(builder -> {
+                    builder.from(imageName);
+                    if (pluginContainerPath != null) {
+                        builder.copy(pluginContainerPath, pluginContainerPath);
+                        builder.run("bin/elasticsearch-plugin", "install", "file://" + pluginContainerPath);
+                    }
+                });
         if (pluginContainerPath != null) {
             image.withFileFromFile(pluginContainerPath, plugin);
         }
@@ -62,10 +62,9 @@ public class ElasticsearchWithPluginContainer extends GenericContainer<Elasticse
         withEnv("discovery.type", "single-node");
         addExposedPorts(ELASTICSEARCH_DEFAULT_PORT, ELASTICSEARCH_DEFAULT_TCP_PORT);
         setWaitStrategy(new HttpWaitStrategy()
-            .forPort(ELASTICSEARCH_DEFAULT_PORT)
-            .forStatusCodeMatching(response -> response == HTTP_OK || response == HTTP_UNAUTHORIZED)
-            .withStartupTimeout(Duration.ofMinutes(2)));
-
+                .forPort(ELASTICSEARCH_DEFAULT_PORT)
+                .forStatusCodeMatching(response -> response == HTTP_OK || response == HTTP_UNAUTHORIZED)
+                .withStartupTimeout(Duration.ofMinutes(2)));
         setImage(prepareImage(dockerImage));
     }
 
