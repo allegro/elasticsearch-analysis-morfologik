@@ -4,7 +4,7 @@ buildscript {
         pluginClassname = 'pl.allegro.tech.elasticsearch.plugin.analysis.morfologik.AnalysisMorfologikPlugin'
         pluginDescription = 'Morfologik Polish Lemmatizer plugin for Elasticsearch'
         versions = [
-                'elasticsearch': '7.4.0',
+                'elasticsearch': '7.4.1',
                 'lucene'       : '8.2.0',
                 'log4j'        : '2.11.0',
                 'spock'        : '1.3-groovy-2.5',
@@ -48,9 +48,7 @@ dependencies {
     compile group: 'org.apache.lucene', name: 'lucene-analyzers-morfologik', version: versions.lucene
     testCompile group: 'org.testcontainers', name: 'testcontainers', version: '1.12.1'
     testCompile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: versions.log4j
-    testCompile(group: 'org.elasticsearch.client', name: 'elasticsearch-rest-high-level-client', version: versions.elasticsearch) {
-        exclude group: 'org.elasticsearch.plugin', module: 'mapper-extras'
-    }
+    testCompile group: 'org.elasticsearch.client', name: 'elasticsearch-rest-high-level-client', version: versions.elasticsearch
     testCompile group: 'org.spockframework', name: 'spock-core', version: versions.spock
     testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version: versions.groovy
 }
