@@ -11,8 +11,7 @@ Originally created by https://github.com/monterail/elasticsearch-analysis-morfol
 ## Install
   
 ```
-<ES directory>/bin/elasticsearch-plugin install \
-  pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:7.4.1
+bin/elasticsearch-plugin install pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:7.4.2
 ```
 
 *tip: select proper plugin version, should be the same as elasticsearch version*
@@ -70,11 +69,10 @@ Response:
 
 ## Supported elasticsearch versions: ##
 
-All ready to install plugins are deployed to maven central:
-http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/
+All ready to install plugins are deployed to [maven central](http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/).
 
 ### Elasticsearch 7.x
-- 7.4.x (7.4.0, 7.4.1)
+- 7.4.x (7.4.0, 7.4.1, 7.4.2)
 - 7.3.x (7.3.2)
 
 ### Elasticsearch 6.x
@@ -104,7 +102,7 @@ http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsear
 #### Install in Elasticsearch for version <= 5.4.0
  
 ```
-<ES directory>/bin/elasticsearch-plugin install \
+bin/elasticsearch-plugin install \
   http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/5.4.0/elasticsearch-analysis-morfologik-5.4.0-plugin.zip
 ```
 
@@ -113,7 +111,7 @@ http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsear
 
 #### Install in Elasticsearch 2.x
 ```
-<ES directory>/bin/plugin install \
+bin/plugin install \
   http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/2.4.2/elasticsearch-analysis-morfologik-2.4.2-plugin.zip
 ```
 *tip: select proper plugin version, should be the same as elasticsearch version*
