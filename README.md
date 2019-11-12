@@ -12,7 +12,7 @@ Originally created by https://github.com/monterail/elasticsearch-analysis-morfol
   
 ```
 <ES directory>/bin/elasticsearch-plugin install \
-  pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:6.8.3
+  pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:6.8.4
 ```
 
 *tip: select proper plugin version, should be the same as elasticsearch version*
@@ -82,7 +82,7 @@ http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsear
 - 6.5.x (6.5.0, 6.5.1, 6.5.2, 6.5.3, 6.5.4)
 - 6.6.x (6.6.0, 6.6.1, 6.6.2)
 - 6.7.x (6.7.1, 6.7.2)
-- 6.8.x (6.8.0, 6.8.1, 6.8.2, 6.8.3)
+- 6.8.x (6.8.0, 6.8.1, 6.8.2, 6.8.3, 6.8.4)
 
 ### Elasticsearch 5.x
 - 5.0.x (5.0.0, 5.0.1, 5.0.2)
