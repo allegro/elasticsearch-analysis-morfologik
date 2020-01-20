@@ -104,7 +104,7 @@ All ready to install plugins are deployed to [maven central](https://repo1.maven
  
 ```
 bin/elasticsearch-plugin install \
-  http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/5.4.0/elasticsearch-analysis-morfologik-5.4.0-plugin.zip
+  https://repo1.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/5.4.0/elasticsearch-analysis-morfologik-5.4.0-plugin.zip
 ```
 
 *tip: select proper plugin version, should be the same as elasticsearch version*
@@ -113,7 +113,7 @@ bin/elasticsearch-plugin install \
 #### Install in Elasticsearch 2.x
 ```
 bin/plugin install \
-  http://central.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/2.4.2/elasticsearch-analysis-morfologik-2.4.2-plugin.zip
+  https://repo1.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/2.4.2/elasticsearch-analysis-morfologik-2.4.2-plugin.zip
 ```
 *tip: select proper plugin version, should be the same as elasticsearch version*
 
