@@ -45,7 +45,9 @@ configurations {
 
 dependencies {
     implementation group: 'org.elasticsearch', name: 'elasticsearch', version: versions.elasticsearch
-    implementation group: 'org.apache.lucene', name: 'lucene-analyzers-morfologik', version: versions.lucene
+    implementation(group: 'org.apache.lucene', name: 'lucene-analyzers-morfologik', version: versions.lucene) {
+        exclude group: 'ua.net.nlp'
+    }
     testImplementation group: 'org.testcontainers', name: 'testcontainers', version: '1.12.1'
     testImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: versions.log4j
     testImplementation group: 'org.elasticsearch.client', name: 'elasticsearch-rest-high-level-client', version: versions.elasticsearch
