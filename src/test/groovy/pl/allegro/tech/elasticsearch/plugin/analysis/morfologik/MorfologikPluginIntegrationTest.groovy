@@ -9,18 +9,25 @@ import org.elasticsearch.client.indices.AnalyzeResponse
 import org.junit.AfterClass
 import org.junit.BeforeClass
 import spock.lang.Specification
+import spock.lang.Unroll
 
 
 class MorfologikPluginIntegrationTest extends Specification {
     static final String ELASTIC_VERSION = System.properties['elasticsearchVersion']
     static final String MORFOLOGIK_FILE_NAME = "elasticsearch-analysis-morfologik-${ELASTIC_VERSION}.zip"
     static final String MORFOLOGIK_PLUGIN_PATH = "build/distributions/$MORFOLOGIK_FILE_NAME"
+
+    static final URI CUSTOM_DICTIONARY_PATH = getClass().getResource("/polish-wo-brev.dict").toURI()
+    static final URI CUSTOM_DICTIONARY_PATH_META = getClass().getResource("/polish-wo-brev.info").toURI()
+
     static final ElasticsearchWithPluginContainer container = new ElasticsearchWithPluginContainer("docker.elastic.co/elasticsearch/elasticsearch-oss:$ELASTIC_VERSION")
     static RestHighLevelClient elasticsearchClient
 
     @BeforeClass
     static void setupContainerWithPlugin() {
         container.withPlugin(new File(MORFOLOGIK_PLUGIN_PATH))
+        container.withCustomConfigFile(new File(CUSTOM_DICTIONARY_PATH))
+        container.withCustomConfigFile(new File(CUSTOM_DICTIONARY_PATH_META))
         container.start()
         elasticsearchClient = createClient()
     }
@@ -44,6 +51,32 @@ class MorfologikPluginIntegrationTest extends Specification {
                 .build("jestem")
         expect:
         analyzeAndGetFirstTermResult(requestWithFilter) == "być"
+    }
+
+    @Unroll
+    def "morfologik token filter test: #text, dictionary: #dictionary => #analyzedText"() {
+        expect:
+        analyzeAndGetFirstTermResult(prepareAnalyzerRequest(text, dictionary)) == analyzedText
+
+        /**
+         * dictionaries:
+         * null - default, Polish dictionary from morfologik-polish
+         * polish-wo-brev.dict - eg. custom dictionary (Polish dictionary without abbreviations like: pl => plac;
+         * source: https://github.com/gilek/morfologik-wo-brev)
+         */
+        where:
+        text | dictionary            | analyzedText
+        "pl" | "polish-wo-brev.dict" | "pl"
+        "pl" | null                  | "plac"
+        "s"  | null                  | "sekunda strona"
+        "s"  | "polish-wo-brev.dict" | "s"
+    }
+
+    private static AnalyzeRequest prepareAnalyzerRequest(String text, dictionary = null) {
+        def morfologikFilterSettings = ["type": AnalysisMorfologikPlugin.FILTER_NAME, "dictionary": dictionary]
+        AnalyzeRequest.buildCustomAnalyzer("standard")
+                .addTokenFilter(morfologikFilterSettings)
+                .build(text)
     }
 
     private static String analyzeAndGetFirstTermResult(AnalyzeRequest analyzeRequest) {

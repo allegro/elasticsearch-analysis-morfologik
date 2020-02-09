@@ -16,6 +16,10 @@ bin/elasticsearch-plugin install pl.allegro.tech.elasticsearch.plugin:elasticsea
 
 *tip: select proper plugin version, should be the same as elasticsearch version*
 
+## Changelog:
+version 7.5.3 (version not yet released):
+ - add support for custom morfologik dictionary eg. `{"type": "morfologik_stem", "dictionary": "polish-wo-brev.dict"}`
+
 ## Examples ## 
 
 ### "morfologik" analyzer ###
