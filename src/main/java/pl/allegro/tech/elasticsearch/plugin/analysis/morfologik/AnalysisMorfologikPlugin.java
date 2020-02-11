@@ -20,7 +20,7 @@ public class AnalysisMorfologikPlugin extends Plugin implements AnalysisPlugin {
 
     @Override
     public Map<String, AnalysisProvider<TokenFilterFactory>> getTokenFilters() {
-        return singletonMap(FILTER_NAME, (indexSettings, environment, name, settings) -> new MorfologikTokenFilterFactory(indexSettings, name, settings));
+        return singletonMap(FILTER_NAME, MorfologikTokenFilterFactory::new);
     }
 
     @Override
