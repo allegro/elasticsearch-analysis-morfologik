@@ -11,13 +11,13 @@ Originally created by https://github.com/monterail/elasticsearch-analysis-morfol
 ## Install
   
 ```
-bin/elasticsearch-plugin install pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:7.5.2
+bin/elasticsearch-plugin install pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:7.6.0
 ```
 
 *tip: select proper plugin version, should be the same as elasticsearch version*
 
 ## Changelog:
-version 7.5.3 (version not yet released):
+version 7.6.0
  - add support for custom morfologik dictionary eg. `{"type": "morfologik_stem", "dictionary": "polish-wo-brev.dict"}`
 
 ## Examples ## 
@@ -76,6 +76,7 @@ Response:
 All ready to install plugins are deployed to [maven central](https://repo1.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/).
 
 ### Elasticsearch 7.x
+- 7.6.x (7.6.0)
 - 7.5.x (7.5.0, 7.5.1, 7.5.2)
 - 7.4.x (7.4.0, 7.4.1, 7.4.2)
 - 7.3.x (7.3.2)
