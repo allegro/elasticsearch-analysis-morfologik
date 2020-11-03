@@ -22,7 +22,7 @@ public class ElasticsearchWithPluginContainer extends GenericContainer<Elasticse
      */
     private static final int ELASTICSEARCH_DEFAULT_TCP_PORT = 9300;
 
-    private String dockerImage;
+    private final String dockerImage;
     private File plugin;
 
     /**
