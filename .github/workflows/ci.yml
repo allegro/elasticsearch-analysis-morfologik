@@ -27,7 +27,7 @@ jobs:
           java-version: '11'
 
       - name: 'Unit tests'
-        run: ./gradlew unitTest
+        run: ./gradlew build
 
       - name: 'Parse test report'
         uses: allegro-actions/junit-reporter@v1
