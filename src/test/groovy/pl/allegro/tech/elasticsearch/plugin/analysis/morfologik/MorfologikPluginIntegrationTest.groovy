@@ -20,7 +20,8 @@ class MorfologikPluginIntegrationTest extends Specification {
     static final URI CUSTOM_DICTIONARY_PATH = MorfologikPluginIntegrationTest.class.getResource("/polish-wo-brev.dict").toURI()
     static final URI CUSTOM_DICTIONARY_PATH_META = MorfologikPluginIntegrationTest.class.getResource("/polish-wo-brev.info").toURI()
 
-    static final ElasticsearchWithPluginContainer container = new ElasticsearchWithPluginContainer("docker.elastic.co/elasticsearch/elasticsearch-oss:$ELASTIC_VERSION")
+    static final String ELASTIC_DOCKER_IMAGE = "docker.elastic.co/elasticsearch/elasticsearch:$ELASTIC_VERSION"
+    static final ElasticsearchWithPluginContainer container = new ElasticsearchWithPluginContainer(ELASTIC_DOCKER_IMAGE)
     static RestHighLevelClient elasticsearchClient
 
     @BeforeClass

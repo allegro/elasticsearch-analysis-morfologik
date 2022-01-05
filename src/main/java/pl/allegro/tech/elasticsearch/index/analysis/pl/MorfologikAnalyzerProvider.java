@@ -12,7 +12,6 @@ public class MorfologikAnalyzerProvider extends AbstractIndexAnalyzerProvider<Mo
     public MorfologikAnalyzerProvider(IndexSettings indexSettings, String name, Settings settings) {
         super(indexSettings, name, settings);
         analyzer = new MorfologikAnalyzer();
-        analyzer.setVersion(version);
     }
 
     @Override
