@@ -12,7 +12,7 @@ jobs:
       GRADLE_OPTS: '-Dfile.encoding=utf-8 -Dorg.gradle.daemon=false'
 
     steps:
-      - name: "Checkout repo"
+      - name: "checkout repo"
         uses: actions/checkout@v2
         with:
           fetch-depth: '0'
@@ -26,10 +26,10 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
-      - name: 'Unit tests'
+      - name: 'unit tests'
         run: ./gradlew build
 
-      - name: 'Parse test report'
+      - name: 'test report'
         uses: allegro-actions/junit-reporter@v1
         if: ${{ success() || failure() }}
         with:
