@@ -31,6 +31,7 @@ public class ElasticsearchWithPluginContainer extends GenericContainer<Elasticse
      * @param dockerImageName Full docker image name, like: docker.elastic.co/elasticsearch/elasticsearch:6.4.1
      */
     public ElasticsearchWithPluginContainer(String dockerImageName) {
+        super(dockerImageName);
         this.dockerImage = dockerImageName;
     }
 
