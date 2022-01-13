@@ -49,7 +49,7 @@ dependencies {
     implementation(group: 'org.apache.lucene', name: 'lucene-analyzers-morfologik', version: versions.lucene) {
         exclude group: 'ua.net.nlp'
     }
-    testImplementation group: 'org.testcontainers', name: 'testcontainers', version: '1.15.1'
+    testImplementation group: 'org.testcontainers', name: 'testcontainers', version: '1.16.2'
     testImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: versions.log4j
     testImplementation group: 'org.elasticsearch.client', name: 'elasticsearch-rest-high-level-client', version: versions.elasticsearch
     testImplementation group: 'org.spockframework', name: 'spock-core', version: versions.spock
