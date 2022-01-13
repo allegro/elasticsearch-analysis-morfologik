@@ -1,13 +1,13 @@
 name: unit tests
 on:
-  pull_request:
-    types: [ opened, synchronize, reopened ]
+  workflow_dispatch:
   push:
-    branches: [ master ]
+    branches:
+      - "**"
 
 jobs:
   CI:
-    runs-on: [ ubuntu-latest ]
+    runs-on: ubuntu-latest
     env:
       GRADLE_OPTS: '-Dfile.encoding=utf-8 -Dorg.gradle.daemon=false'
 
@@ -34,3 +34,5 @@ jobs:
         if: ${{ success() || failure() }}
         with:
           path: '**/build/test-results/**/TEST-*.xml'
+          show: 'all'
+          configuration-url: ''

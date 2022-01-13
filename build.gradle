@@ -7,8 +7,8 @@ buildscript {
                 'elasticsearch': '7.16.2',
                 'lucene'       : '8.10.1',
                 'log4j'        : '2.17.1',
-                'spock'        : '1.3-groovy-2.5',
-                'groovy'       : '2.5.13'
+                'spock'        : '2.0-M4-groovy-3.0',
+                'groovy'       : '3.0.9'
         ]
     }
 }
@@ -68,6 +68,7 @@ tasks.withType(GroovyCompile) {
 test {
     systemProperties['path.home'] = System.getProperty("user.dir")
     systemProperties['elasticsearchVersion'] = versions.elasticsearch
+    useJUnitPlatform()
     testLogging {
         showStandardStreams = false
         exceptionFormat = 'full'
@@ -115,6 +116,10 @@ tasks.withType(Test) {
 java {
     withSourcesJar()
     withJavadocJar()
+}
+
+artifacts {
+    archives buildPluginZip
 }
 
 wrapper {
