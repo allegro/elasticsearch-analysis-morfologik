@@ -7,8 +7,8 @@ buildscript {
                 'elasticsearch': '7.16.2',
                 'lucene'       : '8.10.1',
                 'log4j'        : '2.17.1',
-                'spock'        : '1.3-groovy-2.5',
-                'groovy'       : '2.5.13'
+                'spock'        : '2.0-M4-groovy-3.0',
+                'groovy'       : '3.0.9'
         ]
     }
 }
@@ -49,7 +49,7 @@ dependencies {
     implementation(group: 'org.apache.lucene', name: 'lucene-analyzers-morfologik', version: versions.lucene) {
         exclude group: 'ua.net.nlp'
     }
-    testImplementation group: 'org.testcontainers', name: 'testcontainers', version: '1.16.2'
+    testImplementation group: 'org.testcontainers', name: 'testcontainers', version: '1.15.1'
     testImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: versions.log4j
     testImplementation group: 'org.elasticsearch.client', name: 'elasticsearch-rest-high-level-client', version: versions.elasticsearch
     testImplementation group: 'org.spockframework', name: 'spock-core', version: versions.spock
@@ -68,6 +68,7 @@ tasks.withType(GroovyCompile) {
 test {
     systemProperties['path.home'] = System.getProperty("user.dir")
     systemProperties['elasticsearchVersion'] = versions.elasticsearch
+    useJUnitPlatform()
     testLogging {
         showStandardStreams = false
         exceptionFormat = 'full'

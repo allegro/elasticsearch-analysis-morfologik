@@ -6,11 +6,8 @@ import org.elasticsearch.client.RestClient
 import org.elasticsearch.client.RestHighLevelClient
 import org.elasticsearch.client.indices.AnalyzeRequest
 import org.elasticsearch.client.indices.AnalyzeResponse
-import org.junit.AfterClass
-import org.junit.BeforeClass
 import spock.lang.Specification
 import spock.lang.Unroll
-
 
 class MorfologikPluginIntegrationTest extends Specification {
     static final String ELASTIC_VERSION = System.properties['elasticsearchVersion']
@@ -24,8 +21,7 @@ class MorfologikPluginIntegrationTest extends Specification {
     static final ElasticsearchWithPluginContainer container = new ElasticsearchWithPluginContainer(ELASTIC_DOCKER_IMAGE)
     static RestHighLevelClient elasticsearchClient
 
-    @BeforeClass
-    static void setupContainerWithPlugin() {
+    void setupSpec() {
         container.withPlugin(new File(MORFOLOGIK_PLUGIN_PATH))
         container.withCustomConfigFile(new File(CUSTOM_DICTIONARY_PATH))
         container.withCustomConfigFile(new File(CUSTOM_DICTIONARY_PATH_META))
@@ -33,8 +29,7 @@ class MorfologikPluginIntegrationTest extends Specification {
         elasticsearchClient = createClient()
     }
 
-    @AfterClass
-    static void stopContainer() {
+    void cleanupSpec() {
         container.stop()
     }
 
