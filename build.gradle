@@ -118,6 +118,10 @@ java {
     withJavadocJar()
 }
 
+artifacts {
+    archives buildPluginZip
+}
+
 wrapper {
     gradleVersion = '6.7'
     distributionType = Wrapper.DistributionType.ALL
