@@ -113,8 +113,9 @@ tasks.withType(Test) {
     }
 }
 
-artifacts {
-    archives buildPluginZip
+java {
+    withSourcesJar()
+    withJavadocJar()
 }
 
 wrapper {
@@ -126,6 +127,7 @@ publishing {
     publications {
         sonatype(MavenPublication) {
             from components.java
+            artifact buildPluginZip
 
             pom {
                 name = 'elasticsearch-analysis-morfologik'
