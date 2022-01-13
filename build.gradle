@@ -117,10 +117,6 @@ java {
     withJavadocJar()
 }
 
-artifacts {
-    archives buildPluginZip
-}
-
 wrapper {
     gradleVersion = '6.7'
     distributionType = Wrapper.DistributionType.ALL
@@ -130,6 +126,7 @@ publishing {
     publications {
         sonatype(MavenPublication) {
             from components.java
+            artifact buildPluginZip
 
             pom {
                 name = 'elasticsearch-analysis-morfologik'
