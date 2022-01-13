@@ -34,3 +34,5 @@ jobs:
         if: ${{ success() || failure() }}
         with:
           path: '**/build/test-results/**/TEST-*.xml'
+          show: 'all'
+          configuration-url: ''
