@@ -24,7 +24,7 @@ apply plugin: 'java'
 apply plugin: 'groovy'
 
 group = 'pl.allegro.tech.elasticsearch.plugin'
-version = versions.elasticsearch
+version = '7.16.2.1'
 
 repositories {
     mavenCentral()
