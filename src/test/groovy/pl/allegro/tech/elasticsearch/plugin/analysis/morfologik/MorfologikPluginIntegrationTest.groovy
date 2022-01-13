@@ -11,7 +11,7 @@ import spock.lang.Unroll
 
 class MorfologikPluginIntegrationTest extends Specification {
     static final String ELASTIC_VERSION = System.properties['elasticsearchVersion']
-    static final String MORFOLOGIK_FILE_NAME = "elasticsearch-analysis-morfologik-${ELASTIC_VERSION}.zip"
+    static final String MORFOLOGIK_FILE_NAME = "elasticsearch-analysis-morfologik-${ELASTIC_VERSION}.1.zip"
     static final String MORFOLOGIK_PLUGIN_PATH = "build/distributions/$MORFOLOGIK_FILE_NAME"
 
     static final URI CUSTOM_DICTIONARY_PATH = MorfologikPluginIntegrationTest.class.getResource("/polish-wo-brev.dict").toURI()
