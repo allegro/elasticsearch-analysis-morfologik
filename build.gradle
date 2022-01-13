@@ -112,6 +112,11 @@ tasks.withType(Test) {
     }
 }
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
 artifacts {
     archives buildPluginZip
 }
