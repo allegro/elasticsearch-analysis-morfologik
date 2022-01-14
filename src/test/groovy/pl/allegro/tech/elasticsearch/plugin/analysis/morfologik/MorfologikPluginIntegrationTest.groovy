@@ -1,11 +1,11 @@
 package pl.allegro.tech.elasticsearch.plugin.analysis.morfologik
 
 import org.apache.http.HttpHost
+import org.elasticsearch.action.admin.indices.analyze.AnalyzeRequest
+import org.elasticsearch.action.admin.indices.analyze.AnalyzeResponse
 import org.elasticsearch.client.RequestOptions
 import org.elasticsearch.client.RestClient
 import org.elasticsearch.client.RestHighLevelClient
-import org.elasticsearch.client.indices.AnalyzeRequest
-import org.elasticsearch.client.indices.AnalyzeResponse
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -17,7 +17,7 @@ class MorfologikPluginIntegrationTest extends Specification {
     static final URI CUSTOM_DICTIONARY_PATH = MorfologikPluginIntegrationTest.class.getResource("/polish-wo-brev.dict").toURI()
     static final URI CUSTOM_DICTIONARY_PATH_META = MorfologikPluginIntegrationTest.class.getResource("/polish-wo-brev.info").toURI()
 
-    static final String ELASTIC_DOCKER_IMAGE = "docker.elastic.co/elasticsearch/elasticsearch:$ELASTIC_VERSION"
+    static final String ELASTIC_DOCKER_IMAGE = "docker.elastic.co/elasticsearch/elasticsearch-oss:$ELASTIC_VERSION"
     static final ElasticsearchWithPluginContainer container = new ElasticsearchWithPluginContainer(ELASTIC_DOCKER_IMAGE)
     static RestHighLevelClient elasticsearchClient
 
@@ -35,16 +35,19 @@ class MorfologikPluginIntegrationTest extends Specification {
 
     def "morfologik analyzer should work"() {
         given:
-        AnalyzeRequest request = AnalyzeRequest.withGlobalAnalyzer(AnalysisMorfologikPlugin.ANALYZER_NAME, "jestem")
+        AnalyzeRequest request = new AnalyzeRequest()
+                .analyzer(AnalysisMorfologikPlugin.ANALYZER_NAME)
+                .text("jestem")
         expect:
         analyzeAndGetFirstTermResult(request) == "być"
     }
 
     def "morfologik token filter should work"() {
         given:
-        AnalyzeRequest requestWithFilter = AnalyzeRequest.buildCustomAnalyzer("standard")
+        AnalyzeRequest requestWithFilter = new AnalyzeRequest()
+                .tokenizer("standard")
                 .addTokenFilter(AnalysisMorfologikPlugin.FILTER_NAME)
-                .build("jestem")
+                .text("jestem")
         expect:
         analyzeAndGetFirstTermResult(requestWithFilter) == "być"
     }
@@ -69,10 +72,12 @@ class MorfologikPluginIntegrationTest extends Specification {
     }
 
     private static AnalyzeRequest prepareAnalyzerRequest(String text, dictionary = null) {
-        def morfologikFilterSettings = ["type": AnalysisMorfologikPlugin.FILTER_NAME, "dictionary": dictionary]
-        AnalyzeRequest.buildCustomAnalyzer("standard")
+        def morfologikFilterSettings = ["type": AnalysisMorfologikPlugin.FILTER_NAME, "dictionary": dictionary] as HashMap<String,String>
+
+        return new AnalyzeRequest()
+                .tokenizer("standard")
                 .addTokenFilter(morfologikFilterSettings)
-                .build(text)
+                .text(text)
     }
 
     private static String analyzeAndGetFirstTermResult(AnalyzeRequest analyzeRequest) {
