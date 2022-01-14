@@ -1,13 +1,14 @@
 package pl.allegro.tech.elasticsearch.plugin.analysis.morfologik
 
-import org.apache.http.HttpHost
-import org.elasticsearch.client.RequestOptions
-import org.elasticsearch.client.RestClient
-import org.elasticsearch.client.RestHighLevelClient
-import org.elasticsearch.client.indices.AnalyzeRequest
-import org.elasticsearch.client.indices.AnalyzeResponse
+
 import spock.lang.Specification
 import spock.lang.Unroll
+
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
+
+import static groovy.json.JsonOutput.toJson
 
 class MorfologikPluginIntegrationTest extends Specification {
     static final String ELASTIC_VERSION = System.properties['elasticsearchVersion']
@@ -19,14 +20,14 @@ class MorfologikPluginIntegrationTest extends Specification {
 
     static final String ELASTIC_DOCKER_IMAGE = "docker.elastic.co/elasticsearch/elasticsearch:$ELASTIC_VERSION"
     static final ElasticsearchWithPluginContainer container = new ElasticsearchWithPluginContainer(ELASTIC_DOCKER_IMAGE)
-    static RestHighLevelClient elasticsearchClient
+
+    private HttpClient httpClient = HttpClient.newBuilder().build()
 
     void setupSpec() {
         container.withPlugin(new File(MORFOLOGIK_PLUGIN_PATH))
         container.withCustomConfigFile(new File(CUSTOM_DICTIONARY_PATH))
         container.withCustomConfigFile(new File(CUSTOM_DICTIONARY_PATH_META))
         container.start()
-        elasticsearchClient = createClient()
     }
 
     void cleanupSpec() {
@@ -35,24 +36,36 @@ class MorfologikPluginIntegrationTest extends Specification {
 
     def "morfologik analyzer should work"() {
         given:
-        AnalyzeRequest request = AnalyzeRequest.withGlobalAnalyzer(AnalysisMorfologikPlugin.ANALYZER_NAME, "jestem")
+        def request = [
+                "analyzer": AnalysisMorfologikPlugin.ANALYZER_NAME,
+                "text"    : "jestem"
+        ]
+
         expect:
-        analyzeAndGetFirstTermResult(request) == "być"
+        analyzeAndGetTokensResult(request) == "być"
     }
 
     def "morfologik token filter should work"() {
         given:
-        AnalyzeRequest requestWithFilter = AnalyzeRequest.buildCustomAnalyzer("standard")
-                .addTokenFilter(AnalysisMorfologikPlugin.FILTER_NAME)
-                .build("jestem")
+        def request = [
+                "tokenizer": "standard",
+                "filter"   : [AnalysisMorfologikPlugin.FILTER_NAME],
+                "text"     : "jestem"
+        ]
+
         expect:
-        analyzeAndGetFirstTermResult(requestWithFilter) == "być"
+        analyzeAndGetTokensResult(request) == "być"
     }
 
     @Unroll
     def "morfologik token filter test: #text, dictionary: #dictionary => #analyzedText"() {
         expect:
-        analyzeAndGetFirstTermResult(prepareAnalyzerRequest(text, dictionary)) == analyzedText
+        def request = [
+                "tokenizer": "standard",
+                "filter"   : [["type": AnalysisMorfologikPlugin.FILTER_NAME, "dictionary": dictionary]],
+                "text"     : text
+        ]
+        analyzeAndGetTokensResult(request) == analyzedText
 
         /**
          * dictionaries:
@@ -68,21 +81,17 @@ class MorfologikPluginIntegrationTest extends Specification {
         "s"  | "polish-wo-brev.dict" | "s"
     }
 
-    private static AnalyzeRequest prepareAnalyzerRequest(String text, dictionary = null) {
-        def morfologikFilterSettings = ["type": AnalysisMorfologikPlugin.FILTER_NAME, "dictionary": dictionary]
-        AnalyzeRequest.buildCustomAnalyzer("standard")
-                .addTokenFilter(morfologikFilterSettings)
-                .build(text)
+    private String analyzeAndGetTokensResult(Map<String, Object> analyzeRequest) {
+        def response = sendAnalyzeRequest(container.httpHostAddress, toJson(analyzeRequest))
+        response.result.tokens.collect { it.token }.join(" ")
     }
 
-    private static String analyzeAndGetFirstTermResult(AnalyzeRequest analyzeRequest) {
-        AnalyzeResponse result = elasticsearchClient.indices().analyze(analyzeRequest, RequestOptions.DEFAULT)
-        return result.tokens.collect { it.term }.join(" ")
-    }
-
-    static RestHighLevelClient createClient() {
-        return new RestHighLevelClient(RestClient.builder(
-                HttpHost.create(container.httpHostAddress)
-        ))
+    private def sendAnalyzeRequest(def elasticsearchHost, def requestBody) {
+        def request = HttpRequest.newBuilder()
+                .uri(URI.create("http://$elasticsearchHost/_analyze"))
+                .method("GET", HttpRequest.BodyPublishers.ofString(requestBody as String))
+                .header("Content-Type", "application/json")
+                .build()
+        return new AnalyzeResponse(httpClient.send(request, HttpResponse.BodyHandlers.ofString()))
     }
 }
