@@ -90,7 +90,7 @@ task makePluginDescriptor(type: Copy) {
     ])
 }
 
-task buildPluginZip(type: Zip, dependsOn: [':jar', ':makePluginDescriptor']) {
+task buildPluginZip(type: Zip, dependsOn: [':javadocJar', ':sourcesJar', ':jar', ':makePluginDescriptor']) {
     from "${project.buildDir}/${libsDirName}"
     from configurations.releaseJars
     from 'build/tmp/plugin'
@@ -123,7 +123,7 @@ artifacts {
 }
 
 wrapper {
-    gradleVersion = '6.7'
+    gradleVersion = '7.4'
     distributionType = Wrapper.DistributionType.ALL
 }
 
