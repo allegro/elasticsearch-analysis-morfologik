@@ -52,7 +52,6 @@ dependencies {
     }
     testImplementation group: 'org.testcontainers', name: 'testcontainers', version: versions.testcontainers
     testImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: versions.log4j
-    testImplementation group: 'org.elasticsearch.client', name: 'elasticsearch-rest-high-level-client', version: versions.elasticsearch
     testImplementation group: 'org.spockframework', name: 'spock-core', version: versions.spock
     testImplementation group: 'org.codehaus.groovy', name: 'groovy-all', version: versions.groovy
 }
