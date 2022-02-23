@@ -13,9 +13,21 @@ import java.util.Map;
 
 import static java.util.Collections.singletonMap;
 
+/**
+ * AnalysisPlugin using Morfologik library.
+ *
+ * @see <a href="http://morfologik.blogspot.com/">Morfologik project page</a>
+ */
 public class AnalysisMorfologikPlugin extends Plugin implements AnalysisPlugin {
 
+    /**
+     * Morfologik analyzer name.
+     */
     public static final String ANALYZER_NAME = "morfologik";
+
+    /**
+     * Morfologik filter name.
+     */
     public static final String FILTER_NAME = "morfologik_stem";
 
     @Override

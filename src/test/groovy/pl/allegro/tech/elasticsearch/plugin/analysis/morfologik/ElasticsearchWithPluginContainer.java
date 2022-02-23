@@ -61,6 +61,7 @@ public class ElasticsearchWithPluginContainer extends GenericContainer<Elasticse
         logger().info("Starting an elasticsearch container using [{}]", dockerImage);
         withNetworkAliases("elasticsearch-" + Base58.randomString(6));
         withEnv("discovery.type", "single-node");
+        withEnv("xpack.security.enabled", "false");
         addExposedPorts(ELASTICSEARCH_DEFAULT_PORT, ELASTICSEARCH_DEFAULT_TCP_PORT);
         setWaitStrategy(new HttpWaitStrategy()
                 .forPort(ELASTICSEARCH_DEFAULT_PORT)
