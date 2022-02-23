@@ -1,7 +1,7 @@
 # Morfologik Polish Lemmatizer plugin for Elasticsearch #
 [![Maven Central](https://img.shields.io/maven-metadata/v/https/repo1.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/maven-metadata.xml.svg)](https://repo1.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/)
 
-Morfologik plugin for elasticsearch 7.x, 6.x, 5.x and 2.x. It's lucene-analyzers-morfologik wrapper for elasticsearch.
+Morfologik plugin for elasticsearch 8.x, 7.x, 6.x, 5.x and 2.x. It's lucene-analyzers-morfologik wrapper for elasticsearch.
 
 Plugin provide "morfologik" analyzer and "morfologik_stem" token filter.
 
@@ -10,7 +10,7 @@ Originally created by https://github.com/monterail/elasticsearch-analysis-morfol
 ## Install
   
 ```
-bin/elasticsearch-plugin install pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:7.17.0
+bin/elasticsearch-plugin install pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:8.0.0
 ```
 
 *tip: select proper plugin version, should be the same as elasticsearch version*
@@ -73,6 +73,9 @@ Response:
 ## Supported elasticsearch versions: ##
 
 All ready to install plugins are deployed to [maven central](https://repo1.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/).
+
+### Elasticsearch 8.x
+- 8.0.x (8.0.0)
 
 ### Elasticsearch 7.x
 - 7.17.x (7.17.0)
