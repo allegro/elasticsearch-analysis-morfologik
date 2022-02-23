@@ -12,6 +12,9 @@ import org.elasticsearch.index.analysis.AbstractTokenFilterFactory;
 import java.io.IOException;
 
 
+/**
+ * Morfologik Token Filter Factory with configurable dictionary, default Polish.
+ */
 public class MorfologikTokenFilterFactory extends AbstractTokenFilterFactory {
 
     /**
@@ -21,8 +24,16 @@ public class MorfologikTokenFilterFactory extends AbstractTokenFilterFactory {
 
     private final Dictionary dictionary;
 
-    public MorfologikTokenFilterFactory(IndexSettings indexSettings, Environment env, String name,
-                                        Settings settings) throws IOException {
+    /**
+     * Constructs a new MorfologikTokenFilterFactory.
+     *
+     * @param indexSettings - index level settings
+     * @param env           - elasticsearch environment
+     * @param name          - component name
+     * @param settings      - component settings
+     * @throws IOException - exception during creating a component
+     */
+    public MorfologikTokenFilterFactory(IndexSettings indexSettings, Environment env, String name, Settings settings) throws IOException {
         super(indexSettings, name, settings);
         dictionary = getDictionary(env, settings);
     }
