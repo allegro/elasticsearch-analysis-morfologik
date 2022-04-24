@@ -30,6 +30,12 @@ public class AnalysisMorfologikPlugin extends Plugin implements AnalysisPlugin {
      */
     public static final String FILTER_NAME = "morfologik_stem";
 
+    /**
+     * creates AnalysisMorfologikPlugin
+     */
+    public AnalysisMorfologikPlugin() {
+    }
+
     @Override
     public Map<String, AnalysisProvider<TokenFilterFactory>> getTokenFilters() {
         return singletonMap(FILTER_NAME, MorfologikTokenFilterFactory::new);
