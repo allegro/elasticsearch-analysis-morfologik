@@ -75,7 +75,7 @@ Response:
 All ready to install plugins are deployed to [maven central](https://repo1.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/).
 
 ### Elasticsearch 7.x
-- 7.17.x (7.17.0)
+- 7.17.x (7.17.0, 7.17.3)
 - 7.16.x (7.16.1, 7.16.2.1, 7.16.3)
 - 7.10.x (7.10.0, 7.10.1, 7.10.2)
 - 7.9.x (7.9.0, 7.9.1, 7.9.2, 7.9.3)
