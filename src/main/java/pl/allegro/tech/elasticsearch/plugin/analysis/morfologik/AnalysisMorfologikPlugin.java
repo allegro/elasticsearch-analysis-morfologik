@@ -43,6 +43,6 @@ public class AnalysisMorfologikPlugin extends Plugin implements AnalysisPlugin {
 
     @Override
     public Map<String, AnalysisProvider<AnalyzerProvider<? extends Analyzer>>> getAnalyzers() {
-        return singletonMap(ANALYZER_NAME, (indexSettings, environment, name, settings) -> new MorfologikAnalyzerProvider(indexSettings, name, settings));
+        return singletonMap(ANALYZER_NAME, (indexSettings, environment, name, settings) -> new MorfologikAnalyzerProvider(name, settings));
     }
 }
