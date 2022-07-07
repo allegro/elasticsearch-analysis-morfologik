@@ -71,7 +71,7 @@ public class ElasticsearchWithPluginContainer extends GenericContainer<Elasticse
     }
 
     public String getHttpHostAddress() {
-        return getContainerIpAddress() + ":" + getMappedPort(ELASTICSEARCH_DEFAULT_PORT);
+        return getHost() + ":" + getMappedPort(ELASTICSEARCH_DEFAULT_PORT);
     }
 
     public ElasticsearchWithPluginContainer withCustomConfigFile(File configFile) {
