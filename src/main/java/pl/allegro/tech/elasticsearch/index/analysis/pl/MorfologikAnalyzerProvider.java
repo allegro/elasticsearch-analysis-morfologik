@@ -2,7 +2,6 @@ package pl.allegro.tech.elasticsearch.index.analysis.pl;
 
 import org.apache.lucene.analysis.morfologik.MorfologikAnalyzer;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.index.IndexSettings;
 import org.elasticsearch.index.analysis.AbstractIndexAnalyzerProvider;
 
 /**
@@ -15,12 +14,11 @@ public class MorfologikAnalyzerProvider extends AbstractIndexAnalyzerProvider<Mo
     /**
      * Constructs a new MorfologikAnalyzerProvider.
      *
-     * @param indexSettings - index level settings
      * @param name          - component name
      * @param settings      - component settings
      */
-    public MorfologikAnalyzerProvider(IndexSettings indexSettings, String name, Settings settings) {
-        super(indexSettings, name, settings);
+    public MorfologikAnalyzerProvider(String name, Settings settings) {
+        super(name, settings);
         analyzer = new MorfologikAnalyzer();
     }
 
