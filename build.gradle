@@ -8,8 +8,8 @@ buildscript {
                 'lucene'        : '8.11.2',
                 'log4j'         : '2.17.1',
                 'spock'         : '2.3-groovy-3.0',
-                'groovy'        : '3.0.13',
-                'testcontainers': '1.17.5'
+                'groovy'        : '3.0.17',
+                'testcontainers': '1.17.6'
         ]
     }
 }
