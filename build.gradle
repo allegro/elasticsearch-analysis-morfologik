@@ -6,10 +6,10 @@ buildscript {
         versions = [
                 'elasticsearch' : '8.8.0',
                 'lucene'        : '8.11.2',
-                'log4j'         : '2.17.1',
+                'log4j'         : '2.20.0',
                 'spock'         : '2.3-groovy-3.0',
                 'groovy'        : '3.0.17',
-                'testcontainers': '1.17.6'
+                'testcontainers': '1.18.1'
         ]
     }
 }
@@ -18,7 +18,7 @@ plugins {
     id 'signing'
     id 'maven-publish'
     id 'io.github.gradle-nexus.publish-plugin' version '1.2.0'
-    id 'com.adarshr.test-logger' version '2.0.0'
+    id 'com.adarshr.test-logger' version '3.2.0'
 }
 
 apply plugin: 'java'
@@ -75,6 +75,10 @@ test {
         showStandardStreams = false
         exceptionFormat = 'full'
     }
+}
+
+testlogger {
+    theme 'mocha'
 }
 
 task makePluginDescriptor(type: Copy) {
