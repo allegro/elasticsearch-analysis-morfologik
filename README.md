@@ -10,7 +10,7 @@ Originally created by https://github.com/monterail/elasticsearch-analysis-morfol
 ## Install
   
 ```
-bin/elasticsearch-plugin install pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:7.17.9
+bin/elasticsearch-plugin install pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:7.17.10
 ```
 
 *tip: select proper plugin version, should be the same as elasticsearch version*
@@ -75,7 +75,7 @@ Response:
 All ready to install plugins are deployed to [maven central](https://repo1.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/).
 
 ### Elasticsearch 7.x
-- 7.17.x (7.17.0, 7.17.3, 7.17.4, 7.17.5, 7.17.6, 7.17.7, 7.17.8, 7.17.9)
+- 7.17.x (7.17.0, 7.17.3, 7.17.4, 7.17.5, 7.17.6, 7.17.7, 7.17.8, 7.17.9, 7.17.10)
 - 7.16.x (7.16.1, 7.16.2.1, 7.16.3)
 - 7.10.x (7.10.0, 7.10.1, 7.10.2)
 - 7.9.x (7.9.0, 7.9.1, 7.9.2, 7.9.3)
