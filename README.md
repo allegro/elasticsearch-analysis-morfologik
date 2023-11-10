@@ -75,7 +75,9 @@ Response:
 All ready to install plugins are deployed to [maven central](https://repo1.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/).
 
 ### Elasticsearch 8.x
+- 8.10.x (8.11.0)
 - 8.10.x (8.10.4)
+- 8.9.x (8.9.0)
 - 8.8.x (8.8.0, 8.8.1, 8.8.2)
 - 8.7.x (8.7.0, 8.7.1)
 - 8.6.x (8.6.0, 8.6.1, 8.6.2)
