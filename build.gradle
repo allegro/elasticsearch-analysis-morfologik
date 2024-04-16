@@ -18,7 +18,7 @@ plugins {
     id 'signing'
     id 'maven-publish'
     id 'io.github.gradle-nexus.publish-plugin' version '1.2.0'
-    id 'com.adarshr.test-logger' version '3.2.0'
+    id 'com.adarshr.test-logger' version '4.0.0'
 }
 
 apply plugin: 'java'
@@ -46,13 +46,14 @@ configurations {
 }
 
 dependencies {
-    implementation (group: 'org.elasticsearch', name: 'elasticsearch', version: versions.elasticsearch) {
+    implementation(group: 'org.elasticsearch', name: 'elasticsearch', version: versions.elasticsearch) {
         exclude group: 'org.elasticsearch', module: 'elasticsearch-preallocate'
     }
     implementation(group: 'org.apache.lucene', name: 'lucene-analyzers-morfologik', version: versions.lucene) {
         exclude group: 'ua.net.nlp'
     }
     testImplementation group: 'org.testcontainers', name: 'testcontainers', version: versions.testcontainers
+    testImplementation group: 'org.apache.commons', name: 'commons-compress', version: '1.26.1'
     testImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: versions.log4j
     testImplementation group: 'org.spockframework', name: 'spock-core', version: versions.spock
     testImplementation group: 'org.codehaus.groovy', name: 'groovy-all', version: versions.groovy
@@ -63,7 +64,7 @@ compileJava {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-tasks.withType(GroovyCompile) {
+tasks.withType(GroovyCompile).configureEach {
     options.compilerArgs << "-proc:none"
 }
 
@@ -81,36 +82,37 @@ testlogger {
     theme 'mocha'
 }
 
-task makePluginDescriptor(type: Copy) {
+tasks.register('makePluginDescriptor', Copy) {
     from 'src/main/templates'
-    into "${project.buildDir}/tmp/plugin"
+    into layout.buildDirectory.dir("tmp/plugin")
     expand([
             'descriptor': [
                     'name'                : pluginName,
                     'classname'           : pluginClassname,
                     'description'         : pluginDescription,
                     'version'             : project.property('version'),
-                    'javaVersion'         : project.property('targetCompatibility'),
+                    'javaVersion'         : JavaVersion.VERSION_11,
                     'elasticsearchVersion': versions.elasticsearch
             ]
     ])
 }
 
 task buildPluginZip(type: Zip, dependsOn: [':javadocJar', ':sourcesJar', ':jar', ':makePluginDescriptor']) {
-    from "${project.buildDir}/${libsDirName}"
+    from layout.buildDirectory.dir("libs")
     from configurations.releaseJars
     from 'build/tmp/plugin'
 }
 
-task unpackPlugin(type: Copy, dependsOn: [':buildPluginZip']) {
+tasks.register('unpackPlugin', Copy) {
+    dependsOn[':buildPluginZip']
     delete "plugins"
-    from "${project.buildDir}/${libsDirName}"
+    from layout.buildDirectory.dir("libs")
     from configurations.releaseJars
     from 'build/tmp/plugin'
     into "plugins/${pluginName}"
 }
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
     testLogging {
         exceptionFormat = 'full'
         events = ["failed", "skipped", "passed"]
@@ -129,7 +131,7 @@ artifacts {
 }
 
 wrapper {
-    gradleVersion = '8.4'
+    gradleVersion = '8.7'
     distributionType = Wrapper.DistributionType.ALL
 }
 
