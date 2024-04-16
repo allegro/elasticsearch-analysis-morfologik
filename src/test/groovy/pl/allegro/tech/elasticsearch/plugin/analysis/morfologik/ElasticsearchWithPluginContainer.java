@@ -1,5 +1,6 @@
 package pl.allegro.tech.elasticsearch.plugin.analysis.morfologik;
 
+import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.strategy.HttpWaitStrategy;
 import org.testcontainers.images.builder.ImageFromDockerfile;
@@ -37,7 +38,7 @@ public class ElasticsearchWithPluginContainer extends GenericContainer<Elasticse
 
     public ElasticsearchWithPluginContainer withPlugin(File pluginZipFile) {
         plugin = pluginZipFile;
-        return this.withFileSystemBind(plugin.getPath(), "/tmp/plugins/" + plugin.getName());
+        return this.withFileSystemBind(plugin.getPath(), "/tmp/plugins/" + plugin.getName(), BindMode.READ_ONLY);
     }
 
     private ImageFromDockerfile prepareImage(String imageName) {
@@ -75,6 +76,6 @@ public class ElasticsearchWithPluginContainer extends GenericContainer<Elasticse
     }
 
     public ElasticsearchWithPluginContainer withCustomConfigFile(File configFile) {
-        return this.withFileSystemBind(configFile.getPath(), "/usr/share/elasticsearch/config/" + configFile.getName());
+        return this.withFileSystemBind(configFile.getPath(), "/usr/share/elasticsearch/config/" + configFile.getName(), BindMode.READ_ONLY);
     }
 }
