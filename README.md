@@ -78,6 +78,7 @@ All ready to install plugins are deployed to [maven central](https://repo1.maven
 - 9.0.x (9.0.0)
 
 ### Elasticsearch 8.x
+- 8.18.x (8.18.0)
 - 8.17.x (8.17.0, 8.17.1, 8.17.2, 8.17.3, 8.17.4, 8.17.5)
 - 8.16.x (8.16.0, 8.16.1)
 - 8.15.x (8.15.0, 8.15.1, 8.15.2, 8.15.3, 8.15.4)
