@@ -48,6 +48,6 @@ public class MorfologikTokenFilterFactory extends AbstractTokenFilterFactory {
         if (dictionaryParam == null) {
             return new PolishStemmer().getDictionary();
         }
-        return Dictionary.read(env.configFile().resolve(dictionaryParam));
+        return Dictionary.read(env.configDir().resolve(dictionaryParam));
     }
 }
