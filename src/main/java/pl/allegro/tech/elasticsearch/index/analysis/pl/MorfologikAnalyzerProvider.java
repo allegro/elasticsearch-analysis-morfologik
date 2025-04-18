@@ -18,7 +18,7 @@ public class MorfologikAnalyzerProvider extends AbstractIndexAnalyzerProvider<Mo
      * @param settings      - component settings
      */
     public MorfologikAnalyzerProvider(String name, Settings settings) {
-        super(name, settings);
+        super(name);
         analyzer = new MorfologikAnalyzer();
     }
 
