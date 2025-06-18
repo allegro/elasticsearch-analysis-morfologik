@@ -10,7 +10,7 @@ Originally created by https://github.com/monterail/elasticsearch-analysis-morfol
 ## Install
   
 ```
-bin/elasticsearch-plugin install pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:8.18.0
+bin/elasticsearch-plugin install pl.allegro.tech.elasticsearch.plugin:elasticsearch-analysis-morfologik:9.0.2
 ```
 
 *tip: select proper plugin version, should be the same as elasticsearch version*
@@ -73,6 +73,9 @@ Response:
 ## Supported elasticsearch versions: ##
 
 All ready to install plugins are deployed to [maven central](https://repo1.maven.org/maven2/pl/allegro/tech/elasticsearch/plugin/elasticsearch-analysis-morfologik/).
+
+### Elasticsearch 9.x
+- 9.0.x (9.0.0, 9.0.1, 9.0.2)
 
 ### Elasticsearch 8.x
 - 8.18.x (8.18.0, 8.18.2)

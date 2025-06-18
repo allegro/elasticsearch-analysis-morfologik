@@ -34,7 +34,7 @@ public class MorfologikTokenFilterFactory extends AbstractTokenFilterFactory {
      * @throws IOException - exception during creating a component
      */
     public MorfologikTokenFilterFactory(IndexSettings indexSettings, Environment env, String name, Settings settings) throws IOException {
-        super(name, settings);
+        super(name);
         dictionary = getDictionary(env, settings);
     }
 
